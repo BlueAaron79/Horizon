@@ -1,0 +1,29 @@
+name: Horizon Daily
+
+on:
+  schedule:
+    # 06:00 UTC ≈ 07:00 Europe/Berlin(冬令)/ 08:00(夏令)。按需改。
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}   # 允许在 Actions 页面手动点 "Run workflow" 测试
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Run Horizon (fetch → score → summarize → push Feishu)
+        run: uv run horizon
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          HORIZON_WEBHOOK_URL: ${{ secrets.HORIZON_WEBHOOK_URL }}
+          # 若以后开 GitHub 源提限额,再加:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
