@@ -1,0 +1,61 @@
+{
+  "ai": {
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "api_key_env": "ANTHROPIC_API_KEY",
+    "languages": ["zh"],
+    "throttle_sec": 0,
+    "analysis_concurrency": 3,
+    "enrichment_concurrency": 2
+  },
+  "filtering": {
+    "ai_score_threshold": 7.0,
+    "time_window_hours": 24
+  },
+  "sources": {
+    "hackernews": {
+      "enabled": true,
+      "fetch_top_stories": 30,
+      "min_score": 150
+    },
+    "reddit": {
+      "enabled": true,
+      "fetch_comments": 5,
+      "subreddits": [
+        { "subreddit": "MachineLearning", "sort": "hot", "fetch_limit": 25, "min_score": 50 },
+        { "subreddit": "LocalLLaMA", "sort": "hot", "fetch_limit": 25, "min_score": 50 },
+        { "subreddit": "artificial", "sort": "hot", "fetch_limit": 20, "min_score": 50 },
+        { "subreddit": "electricvehicles", "sort": "hot", "fetch_limit": 20, "min_score": 50 }
+      ]
+    },
+    "rss": [
+      { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/", "enabled": true, "category": "ai" },
+      { "name": "TechCrunch AI", "url": "https://techcrunch.com/category/artificial-intelligence/feed/", "enabled": true, "category": "ai" },
+      { "name": "VentureBeat AI", "url": "https://venturebeat.com/category/ai/feed/", "enabled": true, "category": "ai" },
+      { "name": "MIT Technology Review AI", "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed/", "enabled": true, "category": "ai" },
+      { "name": "Import AI (Jack Clark)", "url": "https://importai.substack.com/feed", "enabled": true, "category": "ai" },
+      { "name": "electrive (EU mobility)", "url": "https://www.electrive.com/feed/", "enabled": true, "category": "auto-eu" },
+      { "name": "InsideEVs", "url": "https://insideevs.com/rss/articles/all/", "enabled": true, "category": "auto-eu" },
+      { "name": "CleanTechnica", "url": "https://cleantechnica.com/feed/", "enabled": true, "category": "auto-eu" },
+      { "name": "Autocar", "url": "https://www.autocar.co.uk/rss", "enabled": true, "category": "auto-eu" }
+    ],
+    "github": [
+      { "type": "repo_releases", "owner": "vllm-project", "repo": "vllm", "enabled": true },
+      { "type": "repo_releases", "owner": "ollama", "repo": "ollama", "enabled": true }
+    ],
+    "twitter": {
+      "enabled": false,
+      "users": ["karpathy", "ylecun", "AndrewYNg"],
+      "fetch_limit": 100,
+      "max_tweets_to_expand": 10
+    }
+  },
+  "webhook": {
+    "enabled": true,
+    "url_env": "HORIZON_WEBHOOK_URL",
+    "platform": "feishu",
+    "layout": "collapsible",
+    "fallback_layout": "markdown",
+    "languages": ["zh"]
+  }
+}
